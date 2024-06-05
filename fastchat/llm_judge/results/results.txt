@@ -2,20 +2,19 @@ Mode: single
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
 
 ########## First turn ##########
-                                        score
-model                             turn       
-a_dpo_model_answers_max_token_128 1     2.275
+                                              score
+model                                   turn       
+b_dcpo_policy_answers_max_new_token_128 1     2.200
+a_dpo_model_answers_max_token_128       1     2.125
 
 ########## Second turn ##########
-                                        score
-model                             turn       
-a_dpo_model_answers_max_token_128 2      1.55
+                                               score
+model                                   turn        
+b_dcpo_policy_answers_max_new_token_128 2     1.7125
+a_dpo_model_answers_max_token_128       2     1.4875
 
 ########## Average ##########
-                                    score
-model                                    
-a_dpo_model_answers_max_token_128  1.9125 
-
-
-
-
+                                           score
+model                                           
+b_dcpo_policy_answers_max_new_token_128  1.95625
+a_dpo_model_answers_max_token_128        1.80625
