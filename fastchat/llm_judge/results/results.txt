@@ -4,8 +4,61 @@
 
 ## Five-arm experiment
 
-python3 show_result.py   --mode single   --judge-model "gpt-4-turbo"
 
+python3 show_result.py   --mode single   --judge-model "gpt-4-turbo"
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                 score
+model                                   turn          
+av_answers                              1     2.500000
+hb_answers                              1     2.426829
+rmp_answers                             1     2.292683
+hb_answers_512_max_new_tokens           1     2.287500
+rv_answers                              1     2.280488
+mp_answers                              1     2.243902
+b_dcpo_policy_answers_max_new_token_128 1     2.200000
+a_dpo_model_answers_max_token_128       1     2.125000
+av_answers_512_max_new_tokens           1     2.125000
+mp_answers_512_max_new_tokens           1     2.062500
+rmp_answers_512_max_new_tokens          1     2.025000
+rv_answers_512_max_new_tokens           1     2.025000
+
+########## Second turn ##########
+                                                 score
+model                                   turn          
+rmp_answers_512_max_new_tokens          2     1.887500
+rmp_answers                             2     1.865854
+av_answers                              2     1.804878
+hb_answers                              2     1.780488
+b_dcpo_policy_answers_max_new_token_128 2     1.712500
+mp_answers                              2     1.682927
+rv_answers                              2     1.670732
+rv_answers_512_max_new_tokens           2     1.662500
+mp_answers_512_max_new_tokens           2     1.650000
+hb_answers_512_max_new_tokens           2     1.575000
+a_dpo_model_answers_max_token_128       2     1.487500
+av_answers_512_max_new_tokens           2     1.450000
+
+########## Average ##########
+                                            score
+model                                            
+av_answers                               2.152439
+hb_answers                               2.103659
+rmp_answers                              2.079268
+rv_answers                               1.975610
+mp_answers                               1.963415
+rmp_answers_512_max_new_tokens           1.956250
+b_dcpo_policy_answers_max_new_token_128  1.956250
+hb_answers_512_max_new_tokens            1.931250
+mp_answers_512_max_new_tokens            1.856250
+rv_answers_512_max_new_tokens            1.843750
+a_dpo_model_answers_max_token_128        1.806250
+av_answers_512_max_new_tokens            1.787500
+
+
+python3 show_result.py   --mode single   --judge-model "gpt-4-turbo"
 Mode: single
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
 
