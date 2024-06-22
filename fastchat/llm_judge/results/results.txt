@@ -1,6 +1,78 @@
 # Results
 # dpo vs dcpo using reference implementation for sft and dpo
 
+## 33 voter experiments
+### Mode single
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                            score
+model                                              turn          
+av_answers                                         1     2.500000
+hb_answers                                         1     2.426829
+rmp_answers                                        1     2.292683
+hb_answers_512_max_new_tokens                      1     2.287500
+rv_answers                                         1     2.280488
+mp_answers                                         1     2.243902
+b_dcpo_policy_answers_max_new_token_128            1     2.200000
+mp_33_voters_dataset_dpo_loss_pythia28_32_batch... 1     2.200000
+a_dpo_model_answers_max_token_128                  1     2.125000
+av_answers_512_max_new_tokens                      1     2.125000
+mp_answers_512_max_new_tokens                      1     2.062500
+rmp_answers_512_max_new_tokens                     1     2.025000
+rv_answers_512_max_new_tokens                      1     2.025000
+rv_33_voters_dataset_dpo_loss_pythia28_32_batch... 1     1.912500
+
+########## Second turn ##########
+                                                            score
+model                                              turn          
+rmp_answers_512_max_new_tokens                     2     1.887500
+rmp_answers                                        2     1.865854
+av_answers                                         2     1.804878
+hb_answers                                         2     1.780488
+b_dcpo_policy_answers_max_new_token_128            2     1.712500
+mp_answers                                         2     1.682927
+rv_answers                                         2     1.670732
+rv_answers_512_max_new_tokens                      2     1.662500
+mp_answers_512_max_new_tokens                      2     1.650000
+hb_answers_512_max_new_tokens                      2     1.575000
+mp_33_voters_dataset_dpo_loss_pythia28_32_batch... 2     1.550000
+a_dpo_model_answers_max_token_128                  2     1.487500
+av_answers_512_max_new_tokens                      2     1.450000
+rv_33_voters_dataset_dpo_loss_pythia28_32_batch... 2     1.437500
+
+########## Average ##########
+                                                       score
+model                                                       
+av_answers                                          2.152439
+hb_answers                                          2.103659
+rmp_answers                                         2.079268
+rv_answers                                          1.975610
+mp_answers                                          1.963415
+b_dcpo_policy_answers_max_new_token_128             1.956250
+rmp_answers_512_max_new_tokens                      1.956250
+hb_answers_512_max_new_tokens                       1.931250
+mp_33_voters_dataset_dpo_loss_pythia28_32_batch...  1.875000
+mp_answers_512_max_new_tokens                       1.856250
+rv_answers_512_max_new_tokens                       1.843750
+a_dpo_model_answers_max_token_128                   1.806250
+av_answers_512_max_new_tokens                       1.787500
+rv_33_voters_dataset_dpo_loss_pythia28_32_batch...  1.675000
+
+
+
+### Mode pairwise-all
+
+python3 show_result.py   --mode "pairwise-all"   --judge-model "gpt-4-turbo"   --model-list "${model_answers[@]}"
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+mp_33_voters_dataset_dpo_loss_pythia28_32_batch...   26    15  119   0.16250    0.09375           0.534375
+rv_33_voters_dataset_dpo_loss_pythia28_32_batch...   15    26  119   0.09375    0.16250           0.465625
+
+
 
 ## Five-arm experiment
 
