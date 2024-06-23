@@ -3,7 +3,6 @@
 
 ## 33 voter experiments
 ### Mode single
-
 Mode: single
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
 
@@ -60,7 +59,6 @@ rv_llama3-8B_512_max_new_tokens                     1.843750
 a_arm_original_dpo_loss_128_max_new_tokens          1.806250
 av_llama3-8B_512_max_new_tokens                     1.787500
 rv_33_voters_dataset_dpo_loss_pythia28_32_batch...  1.675000
-
 
 
 
