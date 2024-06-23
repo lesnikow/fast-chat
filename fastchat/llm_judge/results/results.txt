@@ -2,63 +2,62 @@
 # dpo vs dcpo using reference implementation for sft and dpo
 
 ## 33 voter experiments
-### Mode single
 Mode: single
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
 
 ########## First turn ##########
                                                             score
 model                                              turn          
-av_llama3-8B_128_max_new_tokens                    1     2.500000
-hb_llama3-8B_128_max_new_tokens                    1     2.426829
-rmp_llama3-8B_128_max_new_tokens                   1     2.292683
-hb_llama3-8B_512_max_new_tokens                    1     2.287500
-rv_llama3-8B_128_max_new_tokens                    1     2.280488
-mp_llama3-8B_128_max_new_tokens                    1     2.243902
+av_llama3-8B_voters_128_max_new_tokens             1     2.500000
+hb_helpful_base_control_128_max_new_tokens         1     2.426829
+rmp_llama3-8B_voters_128_max_new_tokens            1     2.292683
+hb_helpful_base_control_512_max_new_tokens         1     2.287500
+rv_llama3-8B_voters_128_max_new_tokens             1     2.280488
+mp_llama3-8B_voters_128_max_new_tokens             1     2.243902
 b_arm_original_dcpo_loss_128_max_new_tokens        1     2.200000
-mp_33_voters_dataset_dpo_loss_pythia28_32_batch... 1     2.200000
+mp_3_x_11_voters_dataset_dpo_loss_pythia28_32_b... 1     2.200000
 a_arm_original_dpo_loss_128_max_new_tokens         1     2.125000
-av_llama3-8B_512_max_new_tokens                    1     2.125000
-mp_llama3-8B_512_max_new_tokens                    1     2.062500
-rmp_llama3-8B_512_max_new_tokens                   1     2.025000
-rv_llama3-8B_512_max_new_tokens                    1     2.025000
-rv_33_voters_dataset_dpo_loss_pythia28_32_batch... 1     1.912500
+av_llama3-8B_voters_512_max_new_tokens             1     2.125000
+mp_llama3-8B_voters_512_max_new_tokens             1     2.062500
+rmp_llama3-8B_voters_512_max_new_tokens            1     2.025000
+rv_llama3-8B_voters_512_max_new_tokens             1     2.025000
+rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_b... 1     1.912500
 
 ########## Second turn ##########
                                                             score
 model                                              turn          
-rmp_llama3-8B_512_max_new_tokens                   2     1.887500
-rmp_llama3-8B_128_max_new_tokens                   2     1.865854
-av_llama3-8B_128_max_new_tokens                    2     1.804878
-hb_llama3-8B_128_max_new_tokens                    2     1.780488
+rmp_llama3-8B_voters_512_max_new_tokens            2     1.887500
+rmp_llama3-8B_voters_128_max_new_tokens            2     1.865854
+av_llama3-8B_voters_128_max_new_tokens             2     1.804878
+hb_helpful_base_control_128_max_new_tokens         2     1.780488
 b_arm_original_dcpo_loss_128_max_new_tokens        2     1.712500
-mp_llama3-8B_128_max_new_tokens                    2     1.682927
-rv_llama3-8B_128_max_new_tokens                    2     1.670732
-rv_llama3-8B_512_max_new_tokens                    2     1.662500
-mp_llama3-8B_512_max_new_tokens                    2     1.650000
-hb_llama3-8B_512_max_new_tokens                    2     1.575000
-mp_33_voters_dataset_dpo_loss_pythia28_32_batch... 2     1.550000
+mp_llama3-8B_voters_128_max_new_tokens             2     1.682927
+rv_llama3-8B_voters_128_max_new_tokens             2     1.670732
+rv_llama3-8B_voters_512_max_new_tokens             2     1.662500
+mp_llama3-8B_voters_512_max_new_tokens             2     1.650000
+hb_helpful_base_control_512_max_new_tokens         2     1.575000
+mp_3_x_11_voters_dataset_dpo_loss_pythia28_32_b... 2     1.550000
 a_arm_original_dpo_loss_128_max_new_tokens         2     1.487500
-av_llama3-8B_512_max_new_tokens                    2     1.450000
-rv_33_voters_dataset_dpo_loss_pythia28_32_batch... 2     1.437500
+av_llama3-8B_voters_512_max_new_tokens             2     1.450000
+rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_b... 2     1.437500
 
 ########## Average ##########
                                                        score
 model                                                       
-av_llama3-8B_128_max_new_tokens                     2.152439
-hb_llama3-8B_128_max_new_tokens                     2.103659
-rmp_llama3-8B_128_max_new_tokens                    2.079268
-rv_llama3-8B_128_max_new_tokens                     1.975610
-mp_llama3-8B_128_max_new_tokens                     1.963415
+av_llama3-8B_voters_128_max_new_tokens              2.152439
+hb_helpful_base_control_128_max_new_tokens          2.103659
+rmp_llama3-8B_voters_128_max_new_tokens             2.079268
+rv_llama3-8B_voters_128_max_new_tokens              1.975610
+mp_llama3-8B_voters_128_max_new_tokens              1.963415
 b_arm_original_dcpo_loss_128_max_new_tokens         1.956250
-rmp_llama3-8B_512_max_new_tokens                    1.956250
-hb_llama3-8B_512_max_new_tokens                     1.931250
-mp_33_voters_dataset_dpo_loss_pythia28_32_batch...  1.875000
-mp_llama3-8B_512_max_new_tokens                     1.856250
-rv_llama3-8B_512_max_new_tokens                     1.843750
+rmp_llama3-8B_voters_512_max_new_tokens             1.956250
+hb_helpful_base_control_512_max_new_tokens          1.931250
+mp_3_x_11_voters_dataset_dpo_loss_pythia28_32_b...  1.875000
+mp_llama3-8B_voters_512_max_new_tokens              1.856250
+rv_llama3-8B_voters_512_max_new_tokens              1.843750
 a_arm_original_dpo_loss_128_max_new_tokens          1.806250
-av_llama3-8B_512_max_new_tokens                     1.787500
-rv_33_voters_dataset_dpo_loss_pythia28_32_batch...  1.675000
+av_llama3-8B_voters_512_max_new_tokens              1.787500
+rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_b...  1.675000
 
 
 
