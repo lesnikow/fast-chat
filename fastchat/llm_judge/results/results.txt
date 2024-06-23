@@ -2,6 +2,7 @@
 # dpo vs dcpo using reference implementation for sft and dpo
 
 ## 33 voter experiments
+### Mode single
 Mode: single
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
 
@@ -69,8 +70,9 @@ Mode: pairwise-all
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
                                                     win  loss  tie  win_rate  loss_rate  win_rate_adjusted
 model                                                                                                     
-mp_33_voters_dataset_dpo_loss_pythia28_32_batch...   26    15  119   0.16250    0.09375           0.534375
-rv_33_voters_dataset_dpo_loss_pythia28_32_batch...   15    26  119   0.09375    0.16250           0.465625
+mp_3_x_11_voters_dpo_loss_pythia28_32_batch_siz...   26    15  119   0.16250    0.09375           0.534375
+rv_3_x_11_voters_dpo_loss_pythia28_32_batch_siz...   15    26  119   0.09375    0.16250           0.465625
+
 
 
 
