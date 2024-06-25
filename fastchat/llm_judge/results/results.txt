@@ -1,6 +1,40 @@
 # Results
 # dpo vs dcpo using reference implementation for sft and dpo
 
+## Haiku 11 voters mp vs rv
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+mp_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 1     2.4000
+rv_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 1     2.2125
+
+########## Second turn ##########
+                                                          score
+model                                              turn        
+mp_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 2     1.6625
+rv_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 2     1.5750
+
+########## Average ##########
+                                                      score
+model                                                      
+mp_11_haiku_voters_dataset_dpo_loss_pythia28_mo...  2.03125
+rv_11_haiku_voters_dataset_dpo_loss_pythia28_mo...  1.89375
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+mp_11_haiku_voters_dataset_dpo_loss_pythia28_mo...   28    16  115  0.176101   0.100629           0.537736
+rv_11_haiku_voters_dataset_dpo_loss_pythia28_mo...   16    28  115  0.100629   0.176101           0.462264
+
+
+
+
 ## 33 voter experiments
 ### Mode single
 Mode: single
