@@ -43,5 +43,74 @@ plt.title("Scores of Models")
 plt.gca().invert_yaxis()
 plt.tight_layout()
 
-# Save the plot
-plt.savefig("scores.png")
+plt.savefig("all_scores.png")
+
+
+# Compare only rv and mp models
+rv_models = [model for model in models if model.startswith("rv")]
+mp_models = [model for model in models if model.startswith("mp")]
+
+# Remove some answers not wanting to plot
+rv_models.remove("rv_answers")
+mp_models.remove("mp_answers")
+rv_models.remove("rv_answers_512_max_new_tokens")
+mp_models.remove("mp_answers_512_max_new_tokens")
+rv_models.remove("rv_llama3-8B_voters_512_max_new_tokens")
+mp_models.remove("mp_llama3-8B_voters_512_max_new_tokens")
+
+plt.figure(figsize=(12, 8))
+plt.barh(rv_models, [data[model] for model in rv_models], color="skyblue", label="rv")
+plt.barh(mp_models, [data[model] for model in mp_models], color="orange", label="mp")
+plt.xlabel("Score")
+plt.title("Scores of Models")
+plt.gca().invert_yaxis()
+plt.legend()
+plt.tight_layout()
+
+plt.savefig("rv_vs_mp_scores.png")
+
+
+# Do as above but group rv, mp models together that share the same voter groups
+# Do two different colors for rv vs mp in same group.
+
+gpt_models = [model for model in models if "gpt35" in model]
+haiku_models = [model for model in models if "haiku" in model]
+llama_models = [
+    model
+    for model in models
+    if "llama" in model
+    and ("rv" in model or "mp" in model)
+    and "rmp" not in model
+    and "512" not in model
+]
+
+# Sort models to have mp first, then rv second
+gpt_models = sorted(gpt_models, key=lambda x: x.split("_")[0])
+haiku_models = sorted(haiku_models, key=lambda x: x.split("_")[0])
+llama_models = sorted(llama_models, key=lambda x: x.split("_")[0])
+ensemble_models = [model for model in models if "3_x_11" in model]
+
+
+plt.figure(figsize=(12, 8))
+
+
+def plot_models(models):
+    for i, model in enumerate(models):
+        if "mp" in model:
+            plt.barh(model, data[model], color="orange", label="mp" if i == 0 else "")
+        elif "rv" in model:
+            plt.barh(model, data[model], color="skyblue", label="rv" if i == 0 else "")
+
+
+plot_models(ensemble_models)
+plot_models(haiku_models)
+plot_models(gpt_models)
+plot_models(llama_models)
+
+
+plt.xlabel("Score")
+plt.title("Scores of Models")
+plt.gca().invert_yaxis()
+plt.tight_layout()
+
+plt.savefig("grouped_scores.png")
