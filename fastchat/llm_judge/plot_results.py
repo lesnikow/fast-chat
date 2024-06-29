@@ -21,7 +21,6 @@ data = {
     "hb_answers_512_max_new_tokens": 1.931250,
     "hb_helpful_base_control_512_max_new_tokens": 1.931250,
     "rv_11_haiku_voters_dataset_dpo_loss_pythia28": 1.893750,
-    "mp_33_voters_dataset_dpo_loss_pythia28_32_batch": 1.875000,
     "mp_3_x_11_voters_dataset_dpo_loss_pythia28_32": 1.875000,
     "mp_answers_512_max_new_tokens": 1.856250,
     "mp_llama3-8B_voters_512_max_new_tokens": 1.856250,
@@ -31,8 +30,7 @@ data = {
     "a_arm_original_dpo_loss_128_max_new_tokens": 1.806250,
     "av_llama3-8B_voters_512_max_new_tokens": 1.787500,
     "av_answers_512_max_new_tokens": 1.787500,
-    "rv_33_voters_dataset_dpo_loss_pythia28_32_batch": 1.675000,
-    "rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_b": 1.675000,
+    "rv_3_x_11_voters_dataset_dpo_loss_pythia28_32": 1.675000,
 }
 
 models = list(data.keys())
