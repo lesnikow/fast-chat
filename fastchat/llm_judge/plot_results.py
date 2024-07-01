@@ -121,7 +121,7 @@ def plot_pairwise_comparisons(mp_or_rmp="mp"):
     )
 
 
-def plot_rv_vs_mp_grouped(turn_int=0):
+def plot_rv_vs_mp_grouped(turn_int=0, mp_or_rmp="mp"):
     scores = [scores_two_turns_average, scores_first_turn, scores_second_turn]
     turn_options = ["Two Turns Average", "First Turn", "Second Turn"]
 
@@ -133,39 +133,63 @@ def plot_rv_vs_mp_grouped(turn_int=0):
 
     gpt_models = [model for model in models if "gpt35" in model]
     haiku_models = [model for model in models if "haiku" in model]
-    llama_models = [
-        model
-        for model in models
-        if "llama" in model
-        and ("rv" in model or "mp" in model)
-        and "rmp" not in model
-        and "512" not in model
-    ]
+    llama_models = (
+        [
+            model
+            for model in models
+            if "llama" in model
+            and ("rv" in model or "mp" in model)
+            and "rmp" not in model
+            and "512" not in model
+        ]
+        if mp_or_rmp == "mp"
+        else [
+            model
+            for model in models
+            if "llama" in model
+            and ("rmp" in model or "av" in model)
+            and "512" not in model
+        ]
+    )
     ensemble_models = [
         model
         for model in models
         if ("3_x_11" in model or "all" in model or "ensemble" in model)
     ]
-    print(f"ensemble_models: {ensemble_models}")
 
     gpt_models = sorted(gpt_models, key=lambda x: x.split("_")[0])
     haiku_models = sorted(haiku_models, key=lambda x: x.split("_")[0])
     llama_models = sorted(llama_models, key=lambda x: x.split("_")[0])
     ensemble_models = sorted(ensemble_models, key=lambda x: x.split(" ")[0])
-    print(f"ensemble_models: {ensemble_models}")
+
+    gpt_models = gpt_models[::-1] if mp_or_rmp == "rmp" else gpt_models
+    haiku_models = haiku_models[::-1] if mp_or_rmp == "rmp" else haiku_models
+    llama_models = llama_models[::-1] if mp_or_rmp == "rmp" else llama_models
+    ensemble_models = ensemble_models[::-1] if mp_or_rmp == "rmp" else ensemble_models
+
     plt.figure(figsize=(12, 8))
 
     def plot_models(models, data):
+        search_str_1, search_str_2 = (
+            ("mp", "rv") if mp_or_rmp == "mp" else ("rmp", "av")
+        )
         for i, model in enumerate(models):
-            if "mp" in model or "MP" in model:
+            if search_str_1 in model:
                 plt.barh(
-                    model, data[model], color="orange", label="mp" if i == 0 else ""
+                    model,
+                    data[model],
+                    color="orange",
+                    label=search_str_1 if i == 0 else "",
                 )
-            elif "rv" in model or "RV" in model:
+            elif search_str_2 in model:
                 plt.barh(
-                    model, data[model], color="skyblue", label="rv" if i == 0 else ""
+                    model,
+                    data[model],
+                    color="skyblue",
+                    label=search_str_2 if i == 0 else "",
                 )
 
+    plt.figure(figsize=(12, 8)) if mp_or_rmp == "mp" else plt.figure(figsize=(12, 4))
     plot_models(ensemble_models, selected_scores)
     plot_models(haiku_models, selected_scores)
     plot_models(gpt_models, selected_scores)
@@ -179,7 +203,9 @@ def plot_rv_vs_mp_grouped(turn_int=0):
     plt.tight_layout()
 
     plt.savefig(
-        f"reports/figures/mp_vs_rv_{selected_turn}.png".lower().replace(" ", "_")
+        f"reports/figures/mp_vs_rv_{selected_turn}_{mp_or_rmp}_mode.png".lower().replace(
+            " ", "_"
+        )
     )
 
 
@@ -189,7 +215,8 @@ if __name__ == "__main__":
 
     if plot_rv_vs_mp_grouped_bool:
         for turn_int in range(3):
-            plot_rv_vs_mp_grouped(turn_int=turn_int)
+            plot_rv_vs_mp_grouped(turn_int=turn_int, mp_or_rmp="mp")
+            plot_rv_vs_mp_grouped(turn_int=turn_int, mp_or_rmp="rmp")
 
     if plot_pairwise_comparisons_bool:
         plot_pairwise_comparisons(mp_or_rmp="mp")
