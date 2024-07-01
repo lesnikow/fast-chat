@@ -165,14 +165,14 @@ def plot_rv_vs_mp_grouped():
 
 def plot_pairwise_comparisons():
     model_win_rates = {
-        "mp_3_x_11_voters_dpo_loss_pythia28_32_batch_size": 0.534375,
-        "rv_3_x_11_voters_dpo_loss_pythia28_32_batch_size": 0.465625,
-        "mp_11_gpt35_voters_dataset_dpo_loss_pythia28": 0.51875,
-        "rv_11_gpt35_voters_dataset_dpo_loss_pythia28": 0.48125,
-        "mp_11_haiku_voters_dataset_dpo_loss_pythia28": 0.537736,
-        "rv_11_haiku_voters_dataset_dpo_loss_pythia28": 0.462264,
-        "mp_llama3-8B_voters_128_max_new_tokens": 0.534375,
-        "rv_llama3-8B_voters_128_max_new_tokens": 0.465625,
+        "mp_3_x_11": 0.534375,
+        "rv_3_x_11": 0.465625,
+        "mp_11_gpt35": 0.51875,
+        "rv_11_gpt35": 0.48125,
+        "mp_11_haiku": 0.537736,
+        "rv_11_haiku": 0.462264,
+        "mp_11_llama3-8B": 0.534375,
+        "rv_11_llama3-8B": 0.465625,
     }
 
     models = list(model_win_rates.keys())
