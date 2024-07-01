@@ -164,27 +164,19 @@ def plot_rv_vs_mp_grouped():
 
 
 def plot_pairwise_comparisons():
-    models = [
-        "mp_llama3-8B_voters_128_max_new_tokens",
-        "rv_llama3-8B_voters_128_max_new_tokens",
-        "mp_11_gpt35_voters_dataset_dpo_loss_pythia28",
-        "rv_11_gpt35_voters_dataset_dpo_loss_pythia28",
-        "mp_11_haiku_voters_dataset_dpo_loss_pythia28",
-        "rv_11_haiku_voters_dataset_dpo_loss_pythia28",
-        "mp_3_x_11_voters_dpo_loss_pythia28_32_batch_size",
-        "rv_3_x_11_voters_dpo_loss_pythia28_32_batch_size",
-    ]
+    model_win_rates = {
+        "mp_3_x_11_voters_dpo_loss_pythia28_32_batch_size": 0.534375,
+        "rv_3_x_11_voters_dpo_loss_pythia28_32_batch_size": 0.465625,
+        "mp_11_gpt35_voters_dataset_dpo_loss_pythia28": 0.51875,
+        "rv_11_gpt35_voters_dataset_dpo_loss_pythia28": 0.48125,
+        "mp_11_haiku_voters_dataset_dpo_loss_pythia28": 0.537736,
+        "rv_11_haiku_voters_dataset_dpo_loss_pythia28": 0.462264,
+        "mp_llama3-8B_voters_128_max_new_tokens": 0.534375,
+        "rv_llama3-8B_voters_128_max_new_tokens": 0.465625,
+    }
 
-    win_rate_adjusted = [
-        0.534375,
-        0.465625,
-        0.51875,
-        0.48125,
-        0.537736,
-        0.462264,
-        0.534375,
-        0.465625,
-    ]
+    models = list(model_win_rates.keys())
+    win_rate_adjusted = list(model_win_rates.values())
 
     plt.figure(figsize=(12, 8))
     plt.barh(
@@ -202,18 +194,15 @@ def plot_pairwise_comparisons():
         ],
     )
 
-    # Plot vertical line at 0.5, the threshold for a model to be considered better
-    plt.axvline(x=0.5, color="red", linestyle="--")
-
-    plt.legend(["Win Rate = 0.5"])
-
-    plt.title("Win Rate Adjusted for Different Models")
+    plt.title("Pairwise Comparisons, Win Rate Adjusted, Pythia2.8B")
     plt.xlabel("Win Rate Adjusted")
-    plt.ylabel("Models")
+    plt.ylabel("Model")
     plt.xticks(rotation=90)
+    plt.axvline(x=0.5, color="red", linestyle="--")
+    plt.legend(["Win Rate = 0.5"], loc="lower right")
     plt.tight_layout()
 
-    plt.savefig("reports/figures/pairwise_comparisons.png")
+    plt.savefig("reports/figures/pairwise_comparisons_win_rate_adjusted.png")
 
 
 if __name__ == "__main__":
