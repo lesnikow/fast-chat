@@ -165,14 +165,14 @@ def plot_rv_vs_mp_grouped():
 
 def plot_pairwise_comparisons():
     model_win_rates = {
-        "mp_3_x_11": 0.534375,
-        "rv_3_x_11": 0.465625,
-        "mp_11_gpt35": 0.51875,
-        "rv_11_gpt35": 0.48125,
-        "mp_11_haiku": 0.537736,
-        "rv_11_haiku": 0.462264,
-        "mp_11_llama3-8B": 0.534375,
-        "rv_11_llama3-8B": 0.465625,
+        "MP all": 0.534375,
+        "RV all": 0.465625,
+        "MP gpt35": 0.51875,
+        "RV gpt35": 0.48125,
+        "MP haiku": 0.537736,
+        "RV haiku": 0.462264,
+        "MP llama3": 0.534375,
+        "RV llama3": 0.465625,
     }
 
     models = list(model_win_rates.keys())
