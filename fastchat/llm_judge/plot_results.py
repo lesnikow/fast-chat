@@ -163,7 +163,7 @@ def plot_rv_vs_mp_grouped():
     )
 
 
-def plot_pairwise_comparisons():
+def plot_pairwise_comparisons(mp_or_rmp="mp"):
     model_win_rates = {
         "MP all": 0.534375,
         "RV all": 0.465625,
@@ -175,10 +175,23 @@ def plot_pairwise_comparisons():
         "RV llama3": 0.465625,
     }
 
-    models = list(model_win_rates.keys())
-    win_rate_adjusted = list(model_win_rates.values())
+    model_win_rates_rmp = {
+        "RMP llama3": 0.475,
+        "AV llama3": 0.525,
+    }
 
-    plt.figure(figsize=(12, 8))
+    models = (
+        list(model_win_rates.keys())
+        if mp_or_rmp == "mp"
+        else list(model_win_rates_rmp.keys())
+    )
+    win_rate_adjusted = (
+        list(model_win_rates.values())
+        if mp_or_rmp == "mp"
+        else list(model_win_rates_rmp.values())
+    )
+
+    plt.figure(figsize=(12, 8)) if mp_or_rmp == "mp" else plt.figure(figsize=(12, 4))
     plt.barh(
         models[::-1],
         win_rate_adjusted[::-1],
@@ -202,10 +215,13 @@ def plot_pairwise_comparisons():
     plt.legend(["Win Rate = 0.5"], loc="lower right")
     plt.tight_layout()
 
-    plt.savefig("reports/figures/pairwise_comparisons_win_rate_adjusted.png")
+    plt.savefig(
+        f"reports/figures/pairwise_comparisons_win_rate_adjusted_{mp_or_rmp}_mode.png"
+    )
 
 
 if __name__ == "__main__":
     plot_all_model_scores()
     plot_rv_vs_mp_grouped()
-    plot_pairwise_comparisons()
+    plot_pairwise_comparisons(mp_or_rmp="mp")
+    plot_pairwise_comparisons(mp_or_rmp="rmp")
