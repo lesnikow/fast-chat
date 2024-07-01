@@ -64,58 +64,6 @@ scores_two_turns_average = {
 }
 
 
-selected_scores = scores_two_turns_average
-turn_options = ["First Turn", "Second Turn", "Two Turns Average"]
-selected_turn = turn_options[2]
-models = list(selected_scores.keys())
-scores = list(selected_scores.values())
-
-
-def plot_rv_vs_mp_grouped():
-    gpt_models = [model for model in models if "gpt35" in model]
-    haiku_models = [model for model in models if "haiku" in model]
-    llama_models = [
-        model
-        for model in models
-        if "llama" in model
-        and ("rv" in model or "mp" in model)
-        and "rmp" not in model
-        and "512" not in model
-    ]
-
-    gpt_models = sorted(gpt_models, key=lambda x: x.split("_")[0])
-    haiku_models = sorted(haiku_models, key=lambda x: x.split("_")[0])
-    llama_models = sorted(llama_models, key=lambda x: x.split("_")[0])
-    ensemble_models = [model for model in models if "3_x_11" in model]
-    plt.figure(figsize=(12, 8))
-
-    def plot_models(models, data):
-        for i, model in enumerate(models):
-            if "mp" in model:
-                plt.barh(
-                    model, data[model], color="orange", label="mp" if i == 0 else ""
-                )
-            elif "rv" in model:
-                plt.barh(
-                    model, data[model], color="skyblue", label="rv" if i == 0 else ""
-                )
-
-    plot_models(ensemble_models, selected_scores)
-    plot_models(haiku_models, selected_scores)
-    plot_models(gpt_models, selected_scores)
-    plot_models(llama_models, selected_scores)
-
-    plt.xlabel("Score")
-    plt.ylabel("Model")
-    plt.title(f"Majority Preference vs Random Voter, {selected_turn}")
-    plt.gca().invert_yaxis()
-    plt.tight_layout()
-
-    plt.savefig(
-        f"reports/figures/mp_vs_rv_{selected_turn}.png".lower().replace(" ", "_")
-    )
-
-
 def plot_pairwise_comparisons(mp_or_rmp="mp"):
     model_win_rates = {
         "MP all": 0.534375,
@@ -170,6 +118,68 @@ def plot_pairwise_comparisons(mp_or_rmp="mp"):
 
     plt.savefig(
         f"reports/figures/pairwise_comparisons_win_rate_adjusted_{mp_or_rmp}_mode.png"
+    )
+
+
+def plot_rv_vs_mp_grouped(turn_int=0):
+    scores = [scores_two_turns_average, scores_first_turn, scores_second_turn]
+    turn_options = ["Two Turns Average", "First Turn", "Second Turn"]
+
+    selected_scores = scores[turn_int]
+    selected_turn = turn_options[turn_int]
+
+    models = list(selected_scores.keys())
+    scores = list(selected_scores.values())
+
+    gpt_models = [model for model in models if "gpt35" in model]
+    haiku_models = [model for model in models if "haiku" in model]
+    llama_models = [
+        model
+        for model in models
+        if "llama" in model
+        and ("rv" in model or "mp" in model)
+        and "rmp" not in model
+        and "512" not in model
+    ]
+    ensemble_models = [
+        model
+        for model in models
+        if ("3_x_11" in model or "all" in model or "ensemble" in model)
+    ]
+    print(f"ensemble_models: {ensemble_models}")
+
+    gpt_models = sorted(gpt_models, key=lambda x: x.split("_")[0])
+    haiku_models = sorted(haiku_models, key=lambda x: x.split("_")[0])
+    llama_models = sorted(llama_models, key=lambda x: x.split("_")[0])
+    ensemble_models = sorted(ensemble_models, key=lambda x: x.split(" ")[0])
+    print(f"ensemble_models: {ensemble_models}")
+    plt.figure(figsize=(12, 8))
+
+    def plot_models(models, data):
+        for i, model in enumerate(models):
+            if "mp" in model or "MP" in model:
+                plt.barh(
+                    model, data[model], color="orange", label="mp" if i == 0 else ""
+                )
+            elif "rv" in model or "RV" in model:
+                plt.barh(
+                    model, data[model], color="skyblue", label="rv" if i == 0 else ""
+                )
+
+    plot_models(ensemble_models, selected_scores)
+    plot_models(haiku_models, selected_scores)
+    plot_models(gpt_models, selected_scores)
+    plot_models(llama_models, selected_scores)
+
+    plt.xlabel("Score")
+    plt.ylabel("Model")
+    plt.xlim(0, 2.5)
+    plt.title(f"Majority Preference vs Random Voter, {selected_turn}")
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
+
+    plt.savefig(
+        f"reports/figures/mp_vs_rv_{selected_turn}.png".lower().replace(" ", "_")
     )
 
 
