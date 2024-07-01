@@ -71,53 +71,6 @@ models = list(selected_scores.keys())
 scores = list(selected_scores.values())
 
 
-def plot_all_model_scores():
-    plt.figure(figsize=(12, 8))
-    plt.barh(models, scores, color="skyblue")
-    plt.xlabel("Score")
-    plt.ylabel("Model")
-    plt.title(f"Scores of All Models, {selected_turn}")
-    plt.gca().invert_yaxis()
-    plt.tight_layout()
-
-    plt.savefig(
-        f"reports/figures/all_model_scores_{selected_turn}.png".lower().replace(
-            " ", "_"
-        )
-    )
-
-
-def plot_rv_vs_mp_basic():
-    rv_models = [model for model in models if model.startswith("rv")]
-    mp_models = [model for model in models if model.startswith("mp")]
-
-    rv_models.remove("rv_llama3-8B_voters_512_max_new_tokens")
-    mp_models.remove("mp_llama3-8B_voters_512_max_new_tokens")
-
-    plt.figure(figsize=(12, 8))
-    plt.barh(
-        rv_models,
-        [selected_scores[model] for model in rv_models],
-        color="skyblue",
-        label="rv",
-    )
-    plt.barh(
-        mp_models,
-        [selected_scores[model] for model in mp_models],
-        color="orange",
-        label="mp",
-    )
-    plt.xlabel("Score")
-    plt.title(f"Scores of Models, {selected_turn}")
-    plt.gca().invert_yaxis()
-    plt.legend()
-    plt.tight_layout()
-
-    plt.savefig(
-        f"reports/figures/rv_vs_mp_scores_{selected_turn}.png".lower().replace(" ", "_")
-    )
-
-
 def plot_rv_vs_mp_grouped():
     gpt_models = [model for model in models if "gpt35" in model]
     haiku_models = [model for model in models if "haiku" in model]
