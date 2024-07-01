@@ -184,7 +184,13 @@ def plot_rv_vs_mp_grouped(turn_int=0):
 
 
 if __name__ == "__main__":
-    plot_all_model_scores()
-    plot_rv_vs_mp_grouped()
-    plot_pairwise_comparisons(mp_or_rmp="mp")
-    plot_pairwise_comparisons(mp_or_rmp="rmp")
+    plot_rv_vs_mp_grouped_bool = True
+    plot_pairwise_comparisons_bool = False
+
+    if plot_rv_vs_mp_grouped_bool:
+        for turn_int in range(3):
+            plot_rv_vs_mp_grouped(turn_int=turn_int)
+
+    if plot_pairwise_comparisons_bool:
+        plot_pairwise_comparisons(mp_or_rmp="mp")
+        plot_pairwise_comparisons(mp_or_rmp="rmp")
