@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 
 scores_first_turn = {
-    "av_llama3-8B_voters_128_max_new_tokens": 2.500000,
+    "AV_llama3-8B_voters_128_max_new_tokens": 2.500000,
     "hb_helpful_base_control_128_max_new_tokens": 2.426829,
     "rv_11_gpt35_voters_dataset_dpo_loss_pythia28_model": 2.425000,
     "mp_11_haiku_voters_dataset_dpo_loss_pythia28_model": 2.400000,
     "mp_11_gpt35_voters_dataset_dpo_loss_pythia28_model": 2.325000,
-    "rmp_llama3-8B_voters_128_max_new_tokens": 2.292683,
+    "RMP_llama3-8B_voters_128_max_new_tokens": 2.292683,
     "hb_helpful_base_control_512_max_new_tokens": 2.287500,
     "rv_llama3-8B_voters_128_max_new_tokens": 2.280488,
     "mp_llama3-8B_voters_128_max_new_tokens": 2.243902,
@@ -14,17 +14,17 @@ scores_first_turn = {
     "b_arm_original_dcpo_loss_128_max_new_tokens": 2.200000,
     "mp_3_x_11_voters_dataset_dpo_loss_pythia28_32_batch_size": 2.200000,
     "a_arm_original_dpo_loss_128_max_new_tokens": 2.125000,
-    "av_llama3-8B_voters_512_max_new_tokens": 2.125000,
+    "AV_llama3-8B_voters_512_max_new_tokens": 2.125000,
     "mp_llama3-8B_voters_512_max_new_tokens": 2.062500,
-    "rmp_llama3-8B_voters_512_max_new_tokens": 2.025000,
+    "RMP_llama3-8B_voters_512_max_new_tokens": 2.025000,
     "rv_llama3-8B_voters_512_max_new_tokens": 2.025000,
     "rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_batch_size": 1.912500,
 }
 
 scores_second_turn = {
-    "rmp_llama3-8B_voters_512_max_new_tokens": 1.887500,
-    "rmp_llama3-8B_voters_128_max_new_tokens": 1.865854,
-    "av_llama3-8B_voters_128_max_new_tokens": 1.804878,
+    "RMP_llama3-8B_voters_512_max_new_tokens": 1.887500,
+    "RMP_llama3-8B_voters_128_max_new_tokens": 1.865854,
+    "AV_llama3-8B_voters_128_max_new_tokens": 1.804878,
     "hb_helpful_base_control_128_max_new_tokens": 1.780488,
     "mp_11_gpt35_voters_dataset_dpo_loss_pythia28_model": 1.737500,
     "b_arm_original_dcpo_loss_128_max_new_tokens": 1.712500,
@@ -38,28 +38,28 @@ scores_second_turn = {
     "rv_11_haiku_voters_dataset_dpo_loss_pythia28_model": 1.575000,
     "mp_3_x_11_voters_dataset_dpo_loss_pythia28_32_batch_size": 1.550000,
     "a_arm_original_dpo_loss_128_max_new_tokens": 1.487500,
-    "av_llama3-8B_voters_512_max_new_tokens": 1.450000,
+    "AV_llama3-8B_voters_512_max_new_tokens": 1.450000,
     "rv_3_x_11_voters_dataset_dpo_loss_pythia28_32_batch_size": 1.437500,
 }
 
 scores_two_turns_average = {
-    "av_llama3-8B_voters_128_max_new_tokens": 2.152439,
+    "AV_llama3-8B_voters_128_max_new_tokens": 2.152439,
     "hb_helpful_base_control_128_max_new_tokens": 2.103659,
-    "rmp_llama3-8B_voters_128_max_new_tokens": 2.079268,
+    "RMP_llama3-8B_voters_128_max_new_tokens": 2.079268,
     "rv_11_gpt35_voters_dataset_dpo_loss_pythia28": 2.056250,
     "mp_11_haiku_voters_dataset_dpo_loss_pythia28": 2.031250,
     "mp_11_gpt35_voters_dataset_dpo_loss_pythia28": 2.031250,
     "rv_llama3-8B_voters_128_max_new_tokens": 1.975610,
     "mp_llama3-8B_voters_128_max_new_tokens": 1.963415,
     "b_arm_original_dcpo_loss_128_max_new_tokens": 1.956250,
-    "rmp_llama3-8B_voters_512_max_new_tokens": 1.956250,
+    "RMP_llama3-8B_voters_512_max_new_tokens": 1.956250,
     "hb_helpful_base_control_512_max_new_tokens": 1.931250,
     "rv_11_haiku_voters_dataset_dpo_loss_pythia28": 1.893750,
     "mp_3_x_11_voters_dataset_dpo_loss_pythia28_32": 1.875000,
     "mp_llama3-8B_voters_512_max_new_tokens": 1.856250,
     "rv_llama3-8B_voters_512_max_new_tokens": 1.843750,
     "a_arm_original_dpo_loss_128_max_new_tokens": 1.806250,
-    "av_llama3-8B_voters_512_max_new_tokens": 1.787500,
+    "AV_llama3-8B_voters_512_max_new_tokens": 1.787500,
     "rv_3_x_11_voters_dataset_dpo_loss_pythia28_32": 1.675000,
 }
 
@@ -139,7 +139,7 @@ def plot_rv_vs_mp_grouped(turn_int=0, mp_or_rmp="mp"):
             for model in models
             if "llama" in model
             and ("rv" in model or "mp" in model)
-            and "rmp" not in model
+            and "RMP" not in model
             and "512" not in model
         ]
         if mp_or_rmp == "mp"
@@ -147,7 +147,7 @@ def plot_rv_vs_mp_grouped(turn_int=0, mp_or_rmp="mp"):
             model
             for model in models
             if "llama" in model
-            and ("rmp" in model or "av" in model)
+            and ("RMP" in model or "AV" in model)
             and "512" not in model
         ]
     )
@@ -167,11 +167,9 @@ def plot_rv_vs_mp_grouped(turn_int=0, mp_or_rmp="mp"):
     llama_models = llama_models[::-1] if mp_or_rmp == "rmp" else llama_models
     ensemble_models = ensemble_models[::-1] if mp_or_rmp == "rmp" else ensemble_models
 
-    plt.figure(figsize=(12, 8))
-
     def plot_models(models, data):
         search_str_1, search_str_2 = (
-            ("mp", "rv") if mp_or_rmp == "mp" else ("rmp", "av")
+            ("mp", "rv") if mp_or_rmp == "mp" else ("RMP", "AV")
         )
         for i, model in enumerate(models):
             if search_str_1 in model:
@@ -190,6 +188,7 @@ def plot_rv_vs_mp_grouped(turn_int=0, mp_or_rmp="mp"):
                 )
 
     plt.figure(figsize=(12, 8)) if mp_or_rmp == "mp" else plt.figure(figsize=(12, 4))
+
     plot_models(ensemble_models, selected_scores)
     plot_models(haiku_models, selected_scores)
     plot_models(gpt_models, selected_scores)
