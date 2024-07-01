@@ -183,7 +183,6 @@ def plot_pairwise_comparisons():
         models[::-1],
         win_rate_adjusted[::-1],
         color=[
-            "orange",
             "skyblue",
             "orange",
             "skyblue",
@@ -191,6 +190,7 @@ def plot_pairwise_comparisons():
             "skyblue",
             "orange",
             "skyblue",
+            "orange",
         ],
     )
 
