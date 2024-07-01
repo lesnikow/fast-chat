@@ -75,7 +75,7 @@ def plot_all_model_scores():
     plt.figure(figsize=(12, 8))
     plt.barh(models, scores, color="skyblue")
     plt.xlabel("Score")
-    plt.ylabel("Models")
+    plt.ylabel("Model")
     plt.title(f"Scores of All Models, {selected_turn}")
     plt.gca().invert_yaxis()
     plt.tight_layout()
@@ -153,7 +153,7 @@ def plot_rv_vs_mp_grouped():
     plot_models(llama_models, selected_scores)
 
     plt.xlabel("Score")
-    plt.ylabel("Models")
+    plt.ylabel("Model")
     plt.title(f"Majority Preference vs Random Voter, {selected_turn}")
     plt.gca().invert_yaxis()
     plt.tight_layout()
