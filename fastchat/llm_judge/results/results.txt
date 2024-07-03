@@ -3,18 +3,17 @@
 
 
 
-## WIP: Evals, RMP/MP and AV/RV pairwise comps
+## Done: Evals, RMP/MP and AV/RV pairwise comps
 
 ### MP / RMP
 Mode: pairwise-all
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
                                          win  loss  tie  win_rate  loss_rate  win_rate_adjusted
 model                                                                                          
-mp_llama3-8B_voters_128_max_new_tokens    32    32   96       0.2        0.2                0.5
 rmp_llama3-8B_voters_128_max_new_tokens   32    32   96       0.2        0.2                0.5
+mp_llama3-8B_voters_128_max_new_tokens    32    32   96       0.2        0.2                0.5
 
 
-Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
                                          win  loss  tie  win_rate  loss_rate  win_rate_adjusted
 model                                                                                          
 rmp_llama3-8B_voters_128_max_new_tokens   37    33   90   0.23125    0.20625             0.5125
@@ -30,6 +29,11 @@ model
 av_llama3-8B_voters_128_max_new_tokens   42    22   96    0.2625     0.1375             0.5625
 rv_llama3-8B_voters_128_max_new_tokens   22    42   96    0.1375     0.2625             0.4375
 
+
+                                        win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                         
+av_llama3-8B_voters_128_max_new_tokens   38    22   99  0.238994   0.138365           0.550314
+rv_llama3-8B_voters_128_max_new_tokens   22    38   99  0.138365   0.238994           0.449686
 
 
 ## Llama3-8B 11 voters rmp vs av
