@@ -2,8 +2,71 @@
 # dpo vs dcpo using reference implementation for sft and dpo
 
 
+## WIP: AV/RMP on haiku, gpt35, all
 
-## Done: Evals, RMP/MP and AV/RV pairwise comps
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+av_11_gpt35_voters_dataset_dpo_loss_pythia28_mo...   38    26   96    0.2375     0.1625             0.5375
+rmp_11_gpt35_voters_dataset_dpo_loss_pythia28_m...   26    38   96    0.1625     0.2375             0.4625
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+rmp_11_gpt35_voters_dataset_dpo_loss_pythia28_m... 1     2.3375
+av_11_gpt35_voters_dataset_dpo_loss_pythia28_mo... 1     2.3000
+
+########## Second turn ##########
+                                                         score
+model                                              turn       
+rmp_11_gpt35_voters_dataset_dpo_loss_pythia28_m... 2     1.950
+av_11_gpt35_voters_dataset_dpo_loss_pythia28_mo... 2     1.825
+
+########## Average ##########
+                                                      score
+model                                                      
+rmp_11_gpt35_voters_dataset_dpo_loss_pythia28_m...  2.14375
+av_11_gpt35_voters_dataset_dpo_loss_pythia28_mo...  2.06250
+
+
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+av_11_haiku_voters_dataset_dpo_loss_pythia28_mo...   40    26   93  0.251572   0.163522           0.544025
+rmp_11_haiku_voters_dataset_dpo_loss_pythia28_m...   26    40   93  0.163522   0.251572           0.455975
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+av_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 1     2.4250
+rmp_11_haiku_voters_dataset_dpo_loss_pythia28_m... 1     1.9625
+
+########## Second turn ##########
+                                                          score
+model                                              turn        
+rmp_11_haiku_voters_dataset_dpo_loss_pythia28_m... 2     1.9375
+av_11_haiku_voters_dataset_dpo_loss_pythia28_mo... 2     1.8875
+
+########## Average ##########
+                                                      score
+model                                                      
+av_11_haiku_voters_dataset_dpo_loss_pythia28_mo...  2.15625
+rmp_11_haiku_voters_dataset_dpo_loss_pythia28_m...  1.95000
+
+
+
+
+## DONE: Evals, RMP/MP and AV/RV pairwise comps
 
 ### MP / RMP
 Mode: pairwise-all
