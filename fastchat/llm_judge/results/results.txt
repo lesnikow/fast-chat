@@ -2,7 +2,41 @@
 # dpo vs dcpo using reference implementation for sft and dpo
 
 
-## WIP: AV/RMP on haiku, gpt35, all
+## Stanford human preference (SHP) a/k/a reddit, majority pref vs split-cycle, shp-maj vs shp-sc
+
+### Eval mode: pairwise
+
+model                                               win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+shp_maj_data_dataset_dpo_loss_pythia28_model_32...   27    26  107   0.16875    0.16250           0.503125                                                                                
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_...   26    27  107   0.16250    0.16875           0.496875    
+
+
+### Eval mode: single score out of 10
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_... 1     2.5250
+shp_maj_data_dataset_dpo_loss_pythia28_model_32... 1     2.2375
+
+########## Second turn ##########
+                                                          score
+model                                              turn        
+shp_maj_data_dataset_dpo_loss_pythia28_model_32... 2     1.7625
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_... 2     1.7625
+
+########## Average ##########
+                                                      score
+model                                                      
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_...  2.14375
+shp_maj_data_dataset_dpo_loss_pythia28_model_32...  2.00000
+
+
+
+
+
+
+## AV/RMP on haiku, gpt35, all
 
 Mode: pairwise-all
 Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
