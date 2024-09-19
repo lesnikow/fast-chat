@@ -2,6 +2,60 @@
 # dpo vs dcpo using reference implementation for sft and dpo
 
 
+
+
+
+## Reddit SHP, majority pref vs split cycle vs no training
+
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_... 1     2.5250
+shp_maj_data_dataset_dpo_loss_pythia28_model_32... 1     2.2375
+no_train_shp_maj_data_dataset_sft_loss_pythia28... 1     2.0500
+
+########## Second turn ##########
+                                                          score
+model                                              turn        
+shp_maj_data_dataset_dpo_loss_pythia28_model_32... 2     1.7625
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_... 2     1.7625
+no_train_shp_maj_data_dataset_sft_loss_pythia28... 2     1.5500
+
+########## Average ##########
+                                                      score
+model                                                      
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_...  2.14375
+shp_maj_data_dataset_dpo_loss_pythia28_model_32...  2.00000
+no_train_shp_maj_data_dataset_sft_loss_pythia28...  1.80000
+
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+
+                                                    win  loss  tie  win_rate  loss_rate win_rate_adjusted
+model                                                                                                     
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_...  67    38  215  0.209375    0.11875     0.545312
+shp_maj_data_dataset_dpo_loss_pythia28_model_32...  57    50  213  0.178125    0.15625     0.510938
+no_train_shp_maj_data_dataset_sft_loss_pythia28...  38    74  208  0.118750    0.23125     0.443750
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Stanford human preference (SHP) a/k/a reddit, majority pref vs split-cycle, shp-maj vs shp-sc
 
 ### Eval mode: pairwise
