@@ -3,6 +3,41 @@
 
 
 
+## Reddit SHP, majority pref vs split cycle pythia 6.9B
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+shp_maj_data_dataset_dpo_loss_pythia69_model_8_... 1     2.2000
+shp_sc_data_dataset_dpo_loss_pythia69_model_8_b... 1     2.1875
+
+########## Second turn ##########
+                                                          score
+model                                              turn        
+shp_sc_data_dataset_dpo_loss_pythia69_model_8_b... 2     1.8625
+shp_maj_data_dataset_dpo_loss_pythia69_model_8_... 2     1.8375
+
+########## Average ##########
+                                                      score
+model                                                      
+shp_sc_data_dataset_dpo_loss_pythia69_model_8_b...  2.02500
+shp_maj_data_dataset_dpo_loss_pythia69_model_8_...  2.01875
+
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+
+                                                       win  loss  tie  win_rate  loss_rate win_rate_adjusted                                                                                   
+model
+shp_sc_data_dataset_dpo_loss_pythia69_model_8_b...     28    25  106  0.176101   0.157233  0.509434                                                                                   
+shp_maj_data_dataset_dpo_loss_pythia69_model_8_...     25    28  106  0.157233   0.176101  0.490566 
+
+
+
 
 
 ## Reddit SHP, majority pref vs split cycle vs no training
