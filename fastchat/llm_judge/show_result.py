@@ -5,6 +5,10 @@ python3 show_result.py --mode [single|pairwise-baseline|pairwise-all]
 import argparse
 import pandas as pd
 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.width', None)  # Adjusts the width of the display
+pd.set_option('display.colheader_justify', 'left')  # Aligns column headers
 
 def display_result_single(args):
     if args.input_file is None:
