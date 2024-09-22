@@ -93,12 +93,6 @@ no_train_shp_maj_data_dataset_sft_loss_pythia28...  38    74  208  0.118750    0
 
 ## Stanford human preference (SHP) a/k/a reddit, majority pref vs split-cycle, shp-maj vs shp-sc
 
-### Eval mode: pairwise
-
-model                                               win  loss  tie  win_rate  loss_rate  win_rate_adjusted
-shp_maj_data_dataset_dpo_loss_pythia28_model_32...   27    26  107   0.16875    0.16250           0.503125                                                                                
-shp_sc_data_dataset_dpo_loss_pythia28_model_32_...   26    27  107   0.16250    0.16875           0.496875    
-
 
 ### Eval mode: single score out of 10
 
@@ -119,6 +113,14 @@ shp_sc_data_dataset_dpo_loss_pythia28_model_32_... 2     1.7625
 model                                                      
 shp_sc_data_dataset_dpo_loss_pythia28_model_32_...  2.14375
 shp_maj_data_dataset_dpo_loss_pythia28_model_32...  2.00000
+
+
+### Eval mode: pairwise
+
+model                                               win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+shp_maj_data_dataset_dpo_loss_pythia28_model_32...   27    26  107   0.16875    0.16250           0.503125                                                                                
+shp_sc_data_dataset_dpo_loss_pythia28_model_32_...   26    27  107   0.16250    0.16875           0.496875    
+
 
 
 
