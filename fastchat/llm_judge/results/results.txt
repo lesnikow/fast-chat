@@ -3,6 +3,45 @@
 
 
 
+### Reddit SHP, maj vs sc vs nt, datasets v2
+
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                         score 
+model                                              turn        
+shp_sc_data_v2_dataset_dpo_loss_pythia69_model_... 1     2.3500
+no_train_no_train_dataset_dataset_sft_loss_pyth... 1     2.0375
+shp_maj_data_v2_dataset_dpo_loss_pythia69_model... 1     1.9500
+
+########## Second turn ##########
+                                                         score 
+model                                              turn        
+shp_sc_data_v2_dataset_dpo_loss_pythia69_model_... 2     2.0125
+shp_maj_data_v2_dataset_dpo_loss_pythia69_model... 2     1.8375
+no_train_no_train_dataset_dataset_sft_loss_pyth... 2     1.7000
+
+########## Average ##########
+                                                    score  
+model                                                      
+shp_sc_data_v2_dataset_dpo_loss_pythia69_model_...  2.18125
+shp_maj_data_v2_dataset_dpo_loss_pythia69_model...  1.89375
+no_train_no_train_dataset_dataset_sft_loss_pyth...  1.86875
+
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+shp_sc_data_v2_dataset_dpo_loss_pythia69_model_...  93   46    181  0.290625  0.14375    0.573438         
+no_train_no_train_dataset_dataset_sft_loss_pyth...  57   80    183  0.178125  0.25000    0.464062         
+shp_maj_data_v2_dataset_dpo_loss_pythia69_model...  54   78    188  0.168750  0.24375    0.462500         
+
+
+
 
 
 ## Reddit SHP, majority pref vs split cycle pythia 6.9B with no_train model
