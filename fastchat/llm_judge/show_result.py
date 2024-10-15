@@ -49,10 +49,12 @@ def display_result_single(args):
         print("\n########## Second turn ##########")
         df_2 = df[df["turn"] == 2].groupby(["model", "turn"]).mean()
         print(df_2.sort_values(by="score", ascending=False))
+        wandb.log({"second_turn_results": wandb.Table(data=df_2.reset_index())})
 
         print("\n########## Average ##########")
         df_3 = df[["model", "score"]].groupby(["model"]).mean()
         print(df_3.sort_values(by="score", ascending=False))
+        wandb.log({"average_results": wandb.Table(data=df_3.reset_index())})
 
 
 def display_result_pairwise(args):
