@@ -172,6 +172,9 @@ def display_result_pairwise(args):
 
 
 if __name__ == "__main__":
+
+    verbose = True
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--bench-name", type=str, default="mt_bench")
     parser.add_argument("--input-file", type=str)
@@ -197,6 +200,11 @@ if __name__ == "__main__":
         ),
     )
     args = parser.parse_args()
+
+    if verbose:
+        print("Arguments:")
+        for key, value in vars(args).items():
+            print(f"{key}: {value}")
 
     if args.mode == "single":
         display_result_func = display_result_single
