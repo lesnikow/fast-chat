@@ -10,6 +10,7 @@ python3 show_result.py --mode [single|pairwise-baseline|pairwise-all]
 import argparse
 
 import pandas as pd
+import wandb
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
@@ -18,24 +19,31 @@ pd.set_option("display.colheader_justify", "left")
 
 
 def display_result_single(args):
+    """Display the results of single score judgment."""
+
+    if wandb.run is None:
+        wanb_name = "__".join([f"{value}_{key}" for key, value in vars(args).items()])
+        wandb.init(project="dcpo_evals", name=wanb_name)
+
     if args.input_file is None:
         input_file = (
             f"data/{args.bench_name}/model_judgment/{args.judge_model}_single.jsonl"
         )
     else:
         input_file = args.input_file
-
     print(f"Input file: {input_file}")
+
     df_all = pd.read_json(input_file, lines=True)
     df = df_all[["model", "score", "turn"]]
     df = df[df["score"] != -1]
-
     if args.model_list is not None:
         df = df[df["model"].isin(args.model_list)]
 
     print("\n########## First turn ##########")
     df_1 = df[df["turn"] == 1].groupby(["model", "turn"]).mean()
     print(df_1.sort_values(by="score", ascending=False))
+
+    wandb.log({"first_turn_results": wandb.Table(data=df_1.reset_index())})
 
     if args.bench_name == "mt_bench":
         print("\n########## Second turn ##########")
