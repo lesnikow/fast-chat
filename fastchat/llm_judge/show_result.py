@@ -9,7 +9,9 @@ python3 show_result.py --mode [single|pairwise-baseline|pairwise-all]
 
 import argparse
 
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 import wandb
 
 pd.set_option("display.max_columns", None)
@@ -45,16 +47,72 @@ def display_result_single(args):
 
     wandb.log({"first_turn_results": wandb.Table(data=df_1.reset_index())})
 
+    fig = create_model_comparison_plot(df_1, score_column="score", model_column="model")
+    wandb.log({"model_comparison_plot_first_turn_results": wandb.Image(fig)})
+    plt.close(fig)
+
     if args.bench_name == "mt_bench":
         print("\n########## Second turn ##########")
         df_2 = df[df["turn"] == 2].groupby(["model", "turn"]).mean()
         print(df_2.sort_values(by="score", ascending=False))
         wandb.log({"second_turn_results": wandb.Table(data=df_2.reset_index())})
 
+        fig = create_model_comparison_plot(
+            df_2, score_column="score", model_column="model"
+        )
+        wandb.log({"model_comparison_plot_second_turn_results": wandb.Image(fig)})
+        plt.close(fig)
+
         print("\n########## Average ##########")
         df_3 = df[["model", "score"]].groupby(["model"]).mean()
         print(df_3.sort_values(by="score", ascending=False))
         wandb.log({"average_results": wandb.Table(data=df_3.reset_index())})
+
+        fig = create_model_comparison_plot(
+            df_3, score_column="score", model_column="model"
+        )
+        wandb.log({"model_comparison_plot_average_results": wandb.Image(fig)})
+        plt.close(fig)
+
+    wandb.log(
+        {
+            "num_models": len(df["model"].unique()),
+            "total_evaluations": len(df),
+            "avg_score_all_models": df["score"].mean(),
+            "std_score_all_models": df["score"].std(),
+        }
+    )
+
+    wandb.finish()
+
+
+def create_model_comparison_plot(df, score_column="score", model_column="model"):
+    """Create a bar plot comparing model performance.
+
+    Basically written by Claude LLM."""
+    df_plot = df.copy()
+    if model_column not in df_plot.index.names:
+        df_plot = df_plot.groupby(model_column)[score_column].mean().reset_index()
+
+    df_sorted = df_plot.sort_values(by=score_column, ascending=False)
+
+    fig_height = max(6, 0.5 * len(df_sorted))
+    fig_width = 16
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+
+    sns.barplot(x=score_column, y=model_column, data=df_sorted, ax=ax)
+
+    ax.set_title("Model Performance Comparison", fontsize=16)
+    ax.set_xlabel("Average Score", fontsize=12)
+    ax.set_ylabel("Model", fontsize=12)
+    ax.set_xlim(left=0)
+    ax.tick_params(axis="both", which="major", labelsize=10)
+
+    for i, v in enumerate(df_sorted[score_column]):
+        ax.text(v, i, f" {v:.2f}", va="center", fontsize=10)
+
+    plt.tight_layout()
+    return fig
 
 
 def display_result_pairwise(args):
