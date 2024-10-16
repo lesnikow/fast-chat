@@ -1,0 +1,33 @@
+
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_single.jsonl
+
+########## First turn ##########
+                                                         score   
+model                                              turn          
+sc_shp_data_v3_topic_matched_2400_dataset_dpo_l... 1     2.162500
+maj_shp_data_v3_topic_matched_2400_dataset_dpo_... 1     2.050000
+no_train_no_train_dataset_dataset_sft_loss_pyth... 1     2.016667
+
+########## Second turn ##########
+                                                         score   
+model                                              turn          
+no_train_no_train_dataset_dataset_sft_loss_pyth... 2     1.745833
+sc_shp_data_v3_topic_matched_2400_dataset_dpo_l... 2     1.737500
+maj_shp_data_v3_topic_matched_2400_dataset_dpo_... 2     1.650000
+
+########## Average ##########
+                                                    score  
+model                                                      
+sc_shp_data_v3_topic_matched_2400_dataset_dpo_l...  1.95000
+no_train_no_train_dataset_dataset_sft_loss_pyth...  1.88125
+maj_shp_data_v3_topic_matched_2400_dataset_dpo_...  1.85000
+
+
+Mode: pairwise-all
+Input file: data/mt_bench/model_judgment/gpt-4-turbo_pair.jsonl
+                                                    win  loss  tie  win_rate  loss_rate  win_rate_adjusted
+model                                                                                                     
+sc_shp_data_v3_topic_matched_2400_dataset_dpo_l...  78   56    186  0.243750  0.175000   0.534375         
+no_train_no_train_dataset_dataset_sft_loss_pyth...  69   77    174  0.215625  0.240625   0.487500         
+maj_shp_data_v3_topic_matched_2400_dataset_dpo_...  59   73    188  0.184375  0.228125   0.478125         
