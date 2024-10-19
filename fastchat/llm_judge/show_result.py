@@ -23,7 +23,7 @@ pd.set_option("display.width", None)
 pd.set_option("display.colheader_justify", "left")
 
 
-def display_result_single(args):
+def display_result_single(args, create_plots=False):
     """Display the results of single score judgment."""
 
     if wandb.run is None:
@@ -44,38 +44,39 @@ def display_result_single(args):
     if args.model_list is not None:
         df = df[df["model"].isin(args.model_list)]
 
-    print("\n########## First turn ##########")
+    print("\nFirst turn:")
     df_1 = df[df["turn"] == 1].groupby(["model", "turn"]).mean()
     print(df_1.sort_values(by="score", ascending=False))
-
     wandb.log({"first_turn_results": wandb.Table(data=df_1.reset_index())})
-
-    fig = create_model_comparison_plot(df_1, score_column="score", model_column="model")
-    wandb.log({"model_comparison_plot_first_turn_results": wandb.Image(fig)})
-    plt.close(fig)
+    if create_plots:
+        fig = create_model_comparison_plot(
+            df_1, score_column="score", model_column="model"
+        )
+        wandb.log({"model_comparison_plot_first_turn_results": wandb.Image(fig)})
+        plt.close(fig)
 
     if args.bench_name == "mt_bench":
-        print("\n########## Second turn ##########")
+        print("\nSecond turn:")
         df_2 = df[df["turn"] == 2].groupby(["model", "turn"]).mean()
         print(df_2.sort_values(by="score", ascending=False))
         wandb.log({"second_turn_results": wandb.Table(data=df_2.reset_index())})
+        if create_plots:
+            fig = create_model_comparison_plot(
+                df_2, score_column="score", model_column="model"
+            )
+            wandb.log({"model_comparison_plot_second_turn_results": wandb.Image(fig)})
+            plt.close(fig)
 
-        fig = create_model_comparison_plot(
-            df_2, score_column="score", model_column="model"
-        )
-        wandb.log({"model_comparison_plot_second_turn_results": wandb.Image(fig)})
-        plt.close(fig)
-
-        print("\n########## Average ##########")
+        print("\nAverage:")
         df_3 = df[["model", "score"]].groupby(["model"]).mean()
         print(df_3.sort_values(by="score", ascending=False))
         wandb.log({"average_results": wandb.Table(data=df_3.reset_index())})
-
-        fig = create_model_comparison_plot(
-            df_3, score_column="score", model_column="model"
-        )
-        wandb.log({"model_comparison_plot_average_results": wandb.Image(fig)})
-        plt.close(fig)
+        if create_plots:
+            fig = create_model_comparison_plot(
+                df_3, score_column="score", model_column="model"
+            )
+            wandb.log({"model_comparison_plot_average_results": wandb.Image(fig)})
+            plt.close(fig)
 
     wandb.log(
         {
