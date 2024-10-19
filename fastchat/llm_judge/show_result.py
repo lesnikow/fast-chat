@@ -21,6 +21,48 @@ import wandb
 os.environ["WANDB_MODE"] = "disabled"
 
 
+def plot_model_comparison(dd, args, turn=1):
+    """Plot average results for maj, sc models as two separate lines on same plot
+    x-axis: DPO steps, y-axis: average score
+    blue line: maj models, orange line: sc models
+    turn can be 1, 2 or 'avg' for average of both turns.
+    """
+
+    dd["dpo_steps"] = dd["model"].apply(
+        lambda x: int(
+            x.split("_")[next(i for i, v in enumerate(x.split("_")) if v.isdigit())]
+        )
+    )
+    dd_maj = dd[dd["model"].str.contains("maj")]
+    dd_sc = dd[dd["model"].str.contains("sc")]
+
+    if turn == "avg":
+        dd_maj = dd_maj.groupby(["model"]).mean()
+        dd_sc = dd_sc.groupby(["model"]).mean()
+    else:
+        dd_maj = dd_maj[dd_maj["turn"] == turn].groupby(["model", "turn"]).mean()
+        dd_sc = dd_sc[dd_sc["turn"] == turn].groupby(["model", "turn"]).mean()
+    dd_maj = dd_maj.sort_values(by="dpo_steps")
+    dd_sc = dd_sc.sort_values(by="dpo_steps")
+
+    fig, ax = plt.subplots()
+    ax.set_xscale("log")
+    ax.set_xticks(dd_maj["dpo_steps"].unique())
+    ax.get_xaxis().set_major_formatter(plt.ScalarFormatter())
+    ax.plot(dd_maj["dpo_steps"], dd_maj["score"], label="maj", marker="o")
+    ax.plot(dd_sc["dpo_steps"], dd_sc["score"], label="sc", marker="o")
+    ax.set_xlabel("DPO steps")
+    ax.set_ylabel("Average score")
+    if turn == "avg":
+        ax.set_title("Average across both turns scores")
+    else:
+        ax.set_title(f"Turn {turn} scores")
+    ax.legend()
+
+    wandb.log({f"model_comparison_plot_turn_{turn}": wandb.Image(fig)})
+    plt.close(fig)
+
+
 def display_result_single(args, create_plots=False):
     """Display the results of single score judgment."""
 
@@ -53,26 +95,6 @@ def display_result_single(args, create_plots=False):
         wandb.log({"model_comparison_plot_first_turn_results": wandb.Image(fig)})
         plt.close(fig)
 
-    def plot_model_comparison(df):
-        """Plot average results for maj, sc models as two separate lines on same plot
-        x-axis: model size, y-axis: average score
-        blue line: maj models, orange line: sc models
-        """
-
-        # Example model names are
-        # sc_shp_data_v3_matched_prompts_8000_dataset_dp...
-        # maj_shp_data_v3_matched_prompts_2000_dataset_dp...
-        # maj_shp_data_v3_matched_prompts_4000_dataset_dp...
-        # sc_shp_data_v3_matched_prompts_16000_dataset_dp...
-
-        # Extract model size from model name
-        logging.info(df)
-
-        # Print out the df column na
-        logging.info(df.columns)
-
-    plot_model_comparison(df_1)
-
     if args.bench_name == "mt_bench":
         print("\nSecond turn:")
         df_2 = df[df["turn"] == 2].groupby(["model", "turn"]).mean()
@@ -95,6 +117,9 @@ def display_result_single(args, create_plots=False):
             )
             wandb.log({"model_comparison_plot_average_results": wandb.Image(fig)})
             plt.close(fig)
+
+    for turn in [1, 2, "avg"]:
+        plot_model_comparison(df, args, turn=turn)
 
     wandb.finish()
 
