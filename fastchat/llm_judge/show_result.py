@@ -18,7 +18,8 @@ import pandas as pd
 import seaborn as sns
 import wandb
 
-os.environ["WANDB_MODE"] = "disabled"
+# os.environ["WANDB_MODE"] = "disabled"
+os.environ["WANDB_SILENT"] = "true"
 
 
 def plot_model_comparison(dd, args, turn=1):
