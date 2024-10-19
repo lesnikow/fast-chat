@@ -996,11 +996,15 @@ class MPTAdapter(BaseModelAdapter):
 
     def load_model(self, model_path: str, from_pretrained_kwargs: dict):
         revision = from_pretrained_kwargs.get("revision", "main")
+
+        print(f"model_path {model_path}")
+        print(f"revision {revision}")
+        print(f"from_pretrained_kwargs {from_pretrained_kwargs}")
         model = AutoModelForCausalLM.from_pretrained(
             model_path,
             low_cpu_mem_usage=True,
             trust_remote_code=True,
-            max_seq_len=8192,
+            # max_seq_len=8192,
             **from_pretrained_kwargs,
         )
         tokenizer = AutoTokenizer.from_pretrained(
