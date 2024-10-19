@@ -8,6 +8,9 @@ python3 show_result.py --mode [single|pairwise-baseline|pairwise-all]
 """
 
 import argparse
+import logging
+import sys
+import time
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -174,6 +177,14 @@ def display_result_pairwise(args):
 if __name__ == "__main__":
 
     verbose = True
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.StreamHandler(sys.stdout),
+            logging.FileHandler(f"logs/log_time{time.time()}.log"),
+        ],
+    )
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--bench-name", type=str, default="mt_bench")
