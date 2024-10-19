@@ -51,6 +51,26 @@ def display_result_single(args, create_plots=False):
         wandb.log({"model_comparison_plot_first_turn_results": wandb.Image(fig)})
         plt.close(fig)
 
+    def plot_model_comparison(df):
+        """Plot average results for maj, sc models as two separate lines on same plot
+        x-axis: model size, y-axis: average score
+        blue line: maj models, orange line: sc models
+        """
+
+        # Example model names are
+        # sc_shp_data_v3_matched_prompts_8000_dataset_dp...
+        # maj_shp_data_v3_matched_prompts_2000_dataset_dp...
+        # maj_shp_data_v3_matched_prompts_4000_dataset_dp...
+        # sc_shp_data_v3_matched_prompts_16000_dataset_dp...
+
+        # Extract model size from model name
+        logging.info(df)
+
+        # Print out the df column na
+        logging.info(df.columns)
+
+    plot_model_comparison(df_1)
+
     if args.bench_name == "mt_bench":
         print("\nSecond turn:")
         df_2 = df[df["turn"] == 2].groupby(["model", "turn"]).mean()
