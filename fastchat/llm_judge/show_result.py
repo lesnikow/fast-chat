@@ -17,10 +17,6 @@ import pandas as pd
 import seaborn as sns
 import wandb
 
-pd.set_option("display.max_columns", None)
-pd.set_option("display.max_rows", None)
-pd.set_option("display.width", None)
-pd.set_option("display.colheader_justify", "left")
 
 
 def display_result_single(args, create_plots=False):
@@ -77,15 +73,6 @@ def display_result_single(args, create_plots=False):
             )
             wandb.log({"model_comparison_plot_average_results": wandb.Image(fig)})
             plt.close(fig)
-
-    wandb.log(
-        {
-            "num_models": len(df["model"].unique()),
-            "total_evaluations": len(df),
-            "avg_score_all_models": df["score"].mean(),
-            "std_score_all_models": df["score"].std(),
-        }
-    )
 
     wandb.finish()
 
@@ -187,6 +174,11 @@ if __name__ == "__main__":
         ],
     )
 
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.max_rows", None)
+    pd.set_option("display.width", None)
+    pd.set_option("display.colheader_justify", "left")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--bench-name", type=str, default="mt_bench")
     parser.add_argument("--input-file", type=str)
@@ -212,7 +204,6 @@ if __name__ == "__main__":
         ),
     )
     args = parser.parse_args()
-
     if verbose:
         print("Arguments:")
         for key, value in vars(args).items():
