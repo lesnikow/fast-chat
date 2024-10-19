@@ -9,6 +9,7 @@ python3 show_result.py --mode [single|pairwise-baseline|pairwise-all]
 
 import argparse
 import logging
+import os
 import sys
 import time
 
@@ -17,6 +18,7 @@ import pandas as pd
 import seaborn as sns
 import wandb
 
+os.environ["WANDB_MODE"] = "disabled"
 
 
 def display_result_single(args, create_plots=False):
