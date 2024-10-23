@@ -22,7 +22,7 @@ import wandb
 os.environ["WANDB_SILENT"] = "true"
 
 
-def plot_model_comparison(dd, args, turn=1):
+def plot_model_comparison(dd, args, turn=1, debug=False):
     """Plot average results for maj, sc models as two separate lines on same plot
     x-axis: DPO steps, y-axis: average score
     blue line: maj models, orange line: sc models
@@ -45,6 +45,31 @@ def plot_model_comparison(dd, args, turn=1):
         dd_sc = dd_sc[dd_sc["turn"] == turn].groupby(["model", "turn"]).mean()
     dd_maj = dd_maj.sort_values(by="dpo_steps")
     dd_sc = dd_sc.sort_values(by="dpo_steps")
+
+    # Refine dpo_steps based on wc output of training data files
+    dpo_dataset_home = os.path.expanduser("~/llm-sct/data/reddit/")
+    dpo_dataset = os.path.join(
+        dpo_dataset_home, "processed/gpt35/maj_sc_v3/matched_prompts/1000_to_64000/"
+    )
+
+    def get_number_of_lines(file):
+        with open(file, "r", encoding="utf-16") as f:
+            out = sum(1 for _ in f) - 2
+            logging.info(f"File: {file}, lines: {out}")
+            return out
+
+    dd_maj["dpo_steps"] = dd_maj["dpo_steps"].apply(
+        lambda x: get_number_of_lines(os.path.join(dpo_dataset, f"maj_{int(x)}.json"))
+    )
+    dd_sc["dpo_steps"] = dd_sc["dpo_steps"].apply(
+        lambda x: get_number_of_lines(os.path.join(dpo_dataset, f"sc_{int(x)}.json"))
+    )
+
+    if debug:
+        logging.info("dd_maj head:")
+        logging.info(dd_maj.head())
+        logging.info("dd_sc head:")
+        logging.info(dd_sc.head())
 
     fig, ax = plt.subplots()
     ax.set_xscale("log")
