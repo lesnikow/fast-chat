@@ -1,3 +1,6 @@
+# Repo specific
+fastchat/llm_judge/data/mt_bench/model_answer/trsh/
+
 # Python
 __pycache__
 *.pyc
