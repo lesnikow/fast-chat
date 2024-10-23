@@ -52,10 +52,10 @@ def plot_model_comparison(dd, args, turn=1):
     ax.get_xaxis().set_major_formatter(plt.ScalarFormatter())
     ax.plot(dd_maj["dpo_steps"], dd_maj["score"], label="maj", marker="o")
     ax.plot(dd_sc["dpo_steps"], dd_sc["score"], label="sc", marker="o")
-    ax.set_xlabel("DPO steps")
+    ax.set_xlabel("maj DPO steps")
     ax.set_ylabel("Average score")
     if turn == "avg":
-        ax.set_title("Average across both turns scores")
+        ax.set_title("Both turns average scores")
     else:
         ax.set_title(f"Turn {turn} scores")
     ax.legend()
