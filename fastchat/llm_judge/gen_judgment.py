@@ -1,7 +1,14 @@
-"""
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+""" Generate judgments for a model or set of models.
 Usage:
-python gen_judgment.py --model-list [LIST-OF-MODEL-ID] --parallel [num-concurrent-api-call] --mode [single|pairwise-baseline|pairwise-all]
+python gen_judgment.py 
+    --model-list [LIST-OF-MODEL-ID] 
+    --parallel [num-concurrent-api-call] 
+    --mode [single|pairwise-baseline|pairwise-all]
 """
+
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import json
