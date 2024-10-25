@@ -47,7 +47,7 @@ def plot_model_comparison_ten_point_scale(dd, args, turn=1, debug=False):
     blue line: maj models, orange line: sc models
     turn can be 1, 2 or 'avg' for average of both turns.
     """
-    logging.info("Plotting model comparison for turn %s", turn)
+    logging.info("Plotting model comparison ten point scale for turn %s", turn)
     dd["dpo_steps"] = dd["model"].apply(
         lambda x: int(
             x.split("_")[next(i for i, v in enumerate(x.split("_")) if v.isdigit())]
