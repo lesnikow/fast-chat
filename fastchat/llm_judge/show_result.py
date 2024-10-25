@@ -22,13 +22,22 @@ import wandb
 os.environ["WANDB_SILENT"] = "true"
 
 
+def get_number_of_lines(file, verbose=False):
+    """Gets number of lines in a file."""
+    with open(file, "r", encoding="utf-16") as f:
+        out = sum(1 for _ in f) - 2
+        if verbose:
+            logging.info(f"File: {file}, lines: {out}")
+        return out
+
+
 def plot_model_comparison(dd, args, turn=1, debug=False):
     """Plot average results for maj, sc models as two separate lines on same plot
     x-axis: DPO steps, y-axis: average score
     blue line: maj models, orange line: sc models
     turn can be 1, 2 or 'avg' for average of both turns.
     """
-
+    logging.info("Plotting model comparison for turn %s", turn)
     dd["dpo_steps"] = dd["model"].apply(
         lambda x: int(
             x.split("_")[next(i for i, v in enumerate(x.split("_")) if v.isdigit())]
@@ -46,17 +55,11 @@ def plot_model_comparison(dd, args, turn=1, debug=False):
     dd_maj = dd_maj.sort_values(by="dpo_steps")
     dd_sc = dd_sc.sort_values(by="dpo_steps")
 
-    # Refine dpo_steps based on wc output of training data files
+    logging.info("Refining dpo_steps based on wc output of training data files")
     dpo_dataset_home = os.path.expanduser("~/llm-sct/data/reddit/")
     dpo_dataset = os.path.join(
         dpo_dataset_home, "processed/gpt35/maj_sc_v3/matched_prompts/1000_to_64000/"
     )
-
-    def get_number_of_lines(file):
-        with open(file, "r", encoding="utf-16") as f:
-            out = sum(1 for _ in f) - 2
-            logging.info(f"File: {file}, lines: {out}")
-            return out
 
     dd_maj["dpo_steps"] = dd_maj["dpo_steps"].apply(
         lambda x: get_number_of_lines(os.path.join(dpo_dataset, f"maj_{int(x)}.json"))
@@ -64,6 +67,7 @@ def plot_model_comparison(dd, args, turn=1, debug=False):
     dd_sc["dpo_steps"] = dd_sc["dpo_steps"].apply(
         lambda x: get_number_of_lines(os.path.join(dpo_dataset, f"sc_{int(x)}.json"))
     )
+    logging.info("Done refining dpo_steps")
 
     if debug:
         logging.info("dd_maj head:")
@@ -71,6 +75,7 @@ def plot_model_comparison(dd, args, turn=1, debug=False):
         logging.info("dd_sc head:")
         logging.info(dd_sc.head())
 
+    logging.info("Plotting model score comparison")
     fig, ax = plt.subplots()
     ax.set_xscale("log")
     ax.set_xticks(dd_maj["dpo_steps"].unique())
@@ -87,6 +92,7 @@ def plot_model_comparison(dd, args, turn=1, debug=False):
 
     wandb.log({f"model_comparison_plot_turn_{turn}": wandb.Image(fig)})
     plt.close(fig)
+    logging.info("Done plotting model score comparison for turn %s", turn)
 
 
 def display_result_single(args, create_plots=False):
