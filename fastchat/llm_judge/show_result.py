@@ -30,6 +30,16 @@ def get_number_of_lines(file, verbose=False):
         return out
 
 
+def plot_model_comparison_win_rate(df, args, turn=1, debug=False):
+    """Plot win rate results for maj, sc models as two separate lines on same
+    plot.
+    x-axis: DPO steps, y-axis: win rate over a baseline model
+    blue line: maj models, orange line: sc models
+    turn can be 1, 2 or 'avg' for average of both turns.
+    """
+    logging.info("Plotting model comparison win rate for turn %s", turn)
+
+
 def plot_model_comparison_ten_point_scale(dd, args, turn=1, debug=False):
     """Plot ten point scale results for maj, sc models as two separate lines on same
     plot.
