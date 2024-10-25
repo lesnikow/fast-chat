@@ -220,14 +220,9 @@ if __name__ == "__main__":
     answer_dir = f"data/{args.bench_name}/model_answer"
     ref_answer_dir = f"data/{args.bench_name}/reference_answer"
 
-    # Load questions
     questions = load_questions(question_file, None, None)
-
-    # Load answers
     model_answers = load_model_answers(answer_dir)
     ref_answers = load_model_answers(ref_answer_dir)
-
-    # Load judge
     judge_prompts = load_judge_prompts(args.judge_file)
 
     if args.first_n:
@@ -264,7 +259,6 @@ if __name__ == "__main__":
     question_math = [q for q in questions if q["category"] in NEED_REF_CATS]
     question_default = [q for q in questions if q["category"] not in NEED_REF_CATS]
 
-    # Make matches
     matches = []
     matches += make_match_func(
         question_default, models, model_answers, judges["default"], baseline_model
@@ -305,11 +299,9 @@ if __name__ == "__main__":
     match_stat["total_num_matches"] = len(matches)
     match_stat["output_path"] = output_file
 
-    # Show match stats and prompt enter to continue
     print("Stats:")
     print(json.dumps(match_stat, indent=4))
 
-    # Play matches
     if args.parallel == 1:
         for match in tqdm(matches):
             play_a_match_func(match, output_file=output_file)
