@@ -31,8 +31,9 @@ def get_number_of_lines(file, verbose=False):
         return out
 
 
-def plot_model_comparison(dd, args, turn=1, debug=False):
-    """Plot average results for maj, sc models as two separate lines on same plot
+def plot_model_comparison_ten_point_scale(dd, args, turn=1, debug=False):
+    """Plot ten point scale results for maj, sc models as two separate lines on same
+    plot.
     x-axis: DPO steps, y-axis: average score
     blue line: maj models, orange line: sc models
     turn can be 1, 2 or 'avg' for average of both turns.
@@ -151,7 +152,7 @@ def display_result_single(args, create_plots=False):
             plt.close(fig)
 
     for turn in [1, 2, "avg"]:
-        plot_model_comparison(df, args, turn=turn)
+        plot_model_comparison_ten_point_scale(df, args, turn=turn)
 
     wandb.finish()
 
