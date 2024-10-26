@@ -105,6 +105,35 @@ def plot_model_comparison_ten_point_scale(dd, args, turn=1, debug=False):
     logging.info("Done plotting model score comparison for turn %s", turn)
 
 
+def create_model_comparison_plot(df, score_column="score", model_column="model"):
+    """Create a bar plot comparing model performance.
+
+    Basically written by Claude LLM."""
+    df_plot = df.copy()
+    if model_column not in df_plot.index.names:
+        df_plot = df_plot.groupby(model_column)[score_column].mean().reset_index()
+
+    df_sorted = df_plot.sort_values(by=score_column, ascending=False)
+
+    fig_height = max(6, 0.5 * len(df_sorted))
+    fig_width = 16
+    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+
+    sns.barplot(x=score_column, y=model_column, data=df_sorted, ax=ax)
+
+    ax.set_title("Model Performance Comparison", fontsize=16)
+    ax.set_xlabel("Average Score", fontsize=12)
+    ax.set_ylabel("Model", fontsize=12)
+    ax.set_xlim(left=0)
+    ax.tick_params(axis="both", which="major", labelsize=10)
+
+    for i, v in enumerate(df_sorted[score_column]):
+        ax.text(v, i, f" {v:.2f}", va="center", fontsize=10)
+
+    plt.tight_layout()
+    return fig
+
+
 def display_result_single(args, create_plots=False):
     """Display the results of single score judgment."""
 
@@ -164,35 +193,6 @@ def display_result_single(args, create_plots=False):
         plot_model_comparison_ten_point_scale(df, args, turn=turn)
 
     wandb.finish()
-
-
-def create_model_comparison_plot(df, score_column="score", model_column="model"):
-    """Create a bar plot comparing model performance.
-
-    Basically written by Claude LLM."""
-    df_plot = df.copy()
-    if model_column not in df_plot.index.names:
-        df_plot = df_plot.groupby(model_column)[score_column].mean().reset_index()
-
-    df_sorted = df_plot.sort_values(by=score_column, ascending=False)
-
-    fig_height = max(6, 0.5 * len(df_sorted))
-    fig_width = 16
-    fig, ax = plt.subplots(figsize=(fig_width, fig_height))
-
-    sns.barplot(x=score_column, y=model_column, data=df_sorted, ax=ax)
-
-    ax.set_title("Model Performance Comparison", fontsize=16)
-    ax.set_xlabel("Average Score", fontsize=12)
-    ax.set_ylabel("Model", fontsize=12)
-    ax.set_xlim(left=0)
-    ax.tick_params(axis="both", which="major", labelsize=10)
-
-    for i, v in enumerate(df_sorted[score_column]):
-        ax.text(v, i, f" {v:.2f}", va="center", fontsize=10)
-
-    plt.tight_layout()
-    return fig
 
 
 def display_result_pairwise(args):
