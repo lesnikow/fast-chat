@@ -38,6 +38,7 @@ def plot_model_comparison_win_rate(df, args, turn=1, debug=False):
     turn can be 1, 2 or 'avg' for average of both turns.
     """
     logging.info("Plotting model comparison win rate for turn %s", turn)
+    raise NotImplementedError
 
 
 def plot_model_comparison_ten_point_scale(dd, args, turn=1, debug=False):
