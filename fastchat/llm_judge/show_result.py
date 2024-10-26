@@ -197,6 +197,7 @@ def display_result_single(args, create_plots=False):
 
 
 def display_result_pairwise(args):
+    """Display the results of pairwise score judgment."""
     if args.input_file is None:
         input_file = (
             f"data/{args.bench_name}/model_judgment/{args.judge_model}_pair.jsonl"
@@ -204,7 +205,7 @@ def display_result_pairwise(args):
     else:
         input_file = args.input_file
 
-    print(f"Input file: {input_file}")
+    logging.info(f"Input file: {input_file}")
     df_all = pd.read_json(input_file, lines=True)
     df_all = df_all[(df_all["g1_winner"] != "error") & (df_all["g2_winner"] != "error")]
 
@@ -213,8 +214,10 @@ def display_result_pairwise(args):
     )
     model_list = list(set(model_list))
 
+    logging.info("model_list is %s", model_list)
+    logging.info("args.model_baseline is %s", args.baseline_model)
+
     list_res = []
-    # traverse df row by row
     for index, row in df_all.iterrows():
         if args.model_list is not None and row["model_1"] not in args.model_list:
             continue
@@ -235,12 +238,12 @@ def display_result_pairwise(args):
             list_res.append({"model": loser, "win": 0, "loss": 1, "tie": 0})
 
     df = pd.DataFrame(list_res)
+    logging.info(f"df.head is {df.head()}")
+
     df = df.groupby(["model"]).sum()
 
-    # remove baseline model
     if args.baseline_model is not None:
         df = df[df.index != args.baseline_model]
-    # add win rate
     df["win_rate"] = df["win"] / (df["win"] + df["loss"] + df["tie"])
     df["loss_rate"] = df["loss"] / (df["win"] + df["loss"] + df["tie"])
     # each tie counts as 0.5 win + 0.5 loss
