@@ -254,6 +254,45 @@ def display_result_pairwise(args):
     # print(df.sort_values(by="loss_rate", ascending=True))
     print(df.sort_values(by="win_rate_adjusted", ascending=False))
 
+    return df
+
+
+def graph_adjusted_win_rate_from_df(df, plot_linear_fit=False):
+    """Graph adjusted win rate from a dataframe."""
+
+    df = df.reset_index()
+    df = df.rename(columns={"index": "model"})
+    df["steps"] = df["model"].apply(lambda x: int(x.split("-")[-1]))
+    df = df.sort_values(by="steps")
+    print(df)
+
+    fig, ax = plt.subplots()
+    ax.set_xlabel("SFT steps")
+    ax.set_ylabel("Win rate adjusted")
+    ax.set_title(f"Win rate adjusted, {df['model'].iloc[0]}", loc="left")
+    ax.plot(df["steps"], df["win_rate_adjusted"], marker="o")
+
+    if plot_linear_fit:
+        import numpy as np
+        from sklearn.metrics import r2_score
+
+        z = np.polyfit(df["steps"], df["win_rate_adjusted"], 1)
+        p = np.poly1d(z)
+        ax.plot(df["steps"], p(df["steps"]), "r--")
+
+        r2 = r2_score(df["win_rate_adjusted"], p(df["steps"]))
+        ax.text(
+            0.05,
+            0.95,
+            f"R2: {r2:.2f}",
+            verticalalignment="top",
+            horizontalalignment="left",
+            transform=ax.transAxes,
+        )
+        logging.info(f"R2: {r2:.2f}")
+
+    return fig
+
 
 if __name__ == "__main__":
 
@@ -311,4 +350,18 @@ if __name__ == "__main__":
         display_result_func = display_result_pairwise
 
     print(f"Mode: {args.mode}")
-    display_result_func(args)
+
+    df = display_result_func(args)
+
+    if args.mode == "pairwise-baseline":
+        if wandb.run is None:
+            wanb_name = "__".join(
+                [f"{value}_{key}" for key, value in vars(args).items()]
+            )
+            wandb.init(project="dcpo_evals", name=wanb_name)
+        fig = graph_adjusted_win_rate_from_df(df)
+        wandb.log({"win_rate_adjusted": wandb.Image(fig)})
+        plt.close(fig)
+        wandb.finish()
+
+    print("Done")
