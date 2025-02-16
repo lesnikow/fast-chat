@@ -3,6 +3,7 @@
 Usage:
 python3 gen_model_answer.py --model-path lmsys/fastchat-t5-3b-v1.0 --model-id fastchat-t5-3b-v1.0
 """
+
 import argparse
 import json
 import os
@@ -111,6 +112,7 @@ def get_model_answers(
                 conv.append_message(conv.roles[0], qs)
                 conv.append_message(conv.roles[1], None)
                 prompt = conv.get_prompt()
+                print(f"prompt is {prompt}")
                 input_ids = tokenizer([prompt]).input_ids
 
                 if temperature < 1e-4:
